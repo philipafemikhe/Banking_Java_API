@@ -10,8 +10,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void createUser(User user){
-        this.userRepository.save(user);
+    public User createUser(User user){
+        return this.userRepository.save(user);
     }
 
     public User getUser(int id){

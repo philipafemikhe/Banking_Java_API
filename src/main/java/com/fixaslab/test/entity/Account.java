@@ -1,21 +1,20 @@
 package com.fixaslab.test.entity;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 import javax.persistence.*;
 
-@Entity(name="account")
+@Entity(name = "account")
 public class Account {
     @Id
-    @Column(name="accountNo")
     private int accountNo;
     private String accountName;
     private String accountSignatory;
     private Double balance;
 
     @ManyToOne
-    @JoinColumn(insertable = false, updatable = false, name = "id")
+    @JoinColumn(insertable = false, updatable = false, name = "userId")
     private User user;
 
     public Account() {
@@ -57,6 +56,14 @@ public class Account {
 
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

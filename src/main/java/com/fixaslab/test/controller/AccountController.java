@@ -1,11 +1,11 @@
 package com.fixaslab.test.controller;
 
 import com.fixaslab.test.entity.Account;
+import com.fixaslab.test.entity.User;
 import com.fixaslab.test.service.AccountService;
+import com.fixaslab.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AccountController {
@@ -13,9 +13,15 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping("/account/create")
-    public Account createAccount(Account account){
-        return this.accountService.createAccount(account);
+    @Autowired
+    private UserService userService;
+
+    @RequestMapping("/account/create/{userId}")
+    public Account createAccount(@PathVariable int userId, Account account){
+        User user = this.userService.getUser(userId);
+        Account newAccount = this.accountService.createAccount(account);
+        newAccount.setUser(user);
+        return newAccount;
     }
 
     @RequestMapping("/account/deposit")
